@@ -1,0 +1,2 @@
+C:\Users\B450M R5\Documents\ConsoleApplication1\x64\Debug\ConsoleApplication1.exe
+C:\Users\B450M R5\Documents\GitHub\betaTest\x64\Debug\ConsoleApplication1.exe
