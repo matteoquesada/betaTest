@@ -34,24 +34,6 @@ public:
 			temp->next = new Node<Route>(route);
 			size++;
 		}
-
-		/*if (head == nullptr) { std::cout << "head is null" << std::endl; }
-		Node<Route>* node = new Node<Route>(route);
-		size++;
-		if (head == nullptr)
-		{
-			head = node;
-		}
-		else
-		{
-			Node<Route>* temp = head;
-			while (temp->next != nullptr)
-			{
-				temp = temp->next;
-			}
-			temp->next = node;
-		}
-		size++;*/
 	}
 
 	void draw(sf::RenderWindow& window)
@@ -65,30 +47,49 @@ public:
 	}
 
 
-	void deleteRoute(int index)
-	{
-		
-		if (index == 0)
-		{
-			Node<Route>* temp = head;
-			head = head->next;
-			delete temp;
-			size--;
-		}
-		else
-		{
-			Node<Route>* temp = head;
-			for (int i = 0; i < index - 1; i++)
-			{
-				temp = temp->next;
-			}
-			Node<Route>* temp2 = temp->next;
-			temp->next = temp2->next;
-			delete temp2;
-			size--;
-		}
+    void deleteRoute(int index)
+    {
+        if (index == 1)
+        {
+            cout << "Deleting first route" << endl;
+            if (head != nullptr)
+            {
+                Node<Route>* temp = head;
+                head = head->next;
+                delete temp;
+                size--;
+            }
+            else
+            {
+                cout << "List is empty" << endl;
+            }
+        }
+        else if (index > 1 && index <= size)
+        {
+            cout << "Deleting route at index " << index << endl;
+            Node<Route>* temp = head;
+            for (int i = 0; i < index - 2; i++)
+            {
+                if (temp == nullptr || temp->next == nullptr)
+                {
+                    cout << "ERROR: Invalid index or list traversal issue" << endl;
+                    return;
+                }
+                temp = temp->next;
+            }
+
+            // Now temp is the node before the one we want to delete
+
+            Node<Route>* nodeToDelete = temp->next;
+            temp->next = nodeToDelete->next;
+            delete nodeToDelete;
+            size--;
+        }
+        else
+        {
+            cout << "INVALID INDEX" << endl;
+        }
+    }
 
 
-
-	}
 };

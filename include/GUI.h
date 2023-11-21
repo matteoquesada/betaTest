@@ -85,13 +85,6 @@ public:
 		window.draw(load_sprite);
 		window.draw(show_hide_sprite);
 
-		// debug prints
-		cout << "Selected route: " << map_overlay.selectedRoute << "\n";
-		cout << "Delete mode: " << map_overlay.deleteMode << "\n";
-	
-
-
-
 		// DELETE MODE BEHAVIOR
 		// MOVES OUT OF THE SCREEN WHEN NOT ACTIVE - MAKING IT INVISIBLE AND UNCLICKABLE
 		if (map_overlay.deleteMode) {
@@ -162,6 +155,7 @@ public:
 				else if (handle_mouse_click(event.mouseButton.x, event.mouseButton.y, change_route_sprite)) {
 					cout << "CHANGE ROUTE" << endl;
 						map_overlay.changeSelectedRoute();
+						cout << "Current route: " << map_overlay.selectedRoute << "\n";
 				}
 				else if (handle_mouse_click(event.mouseButton.x, event.mouseButton.y, show_hide_sprite)) {
 					cout << "SHOW/HIDE ROUTES" << endl;

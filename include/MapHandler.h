@@ -75,13 +75,11 @@ class MapHandler
 		// CHANGE SELECTED ROUTE BY CYCLING THROUGH THE LIST OF ROUTES
 		void changeSelectedRoute()
 		{
-			if (selectedRoute == allRoutes.size)
-			{
-				selectedRoute = 1;
-			}
-			else
-			{
+			if (selectedRoute < allRoutes.size) {
 				selectedRoute++;
+			}
+			else {
+				selectedRoute = 1;
 			}
 
 		}
