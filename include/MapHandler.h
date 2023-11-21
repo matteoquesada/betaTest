@@ -39,7 +39,7 @@ class MapHandler
 		void deleteRoute()
 		{
 			allRoutes.deleteRoute(selectedRoute);
-			selectedRoute = -1;
+			selectedRoute = 0;
 		}
 
 		// ADDS A POINT TO THE SELECTED ROUTE TO THE END OF THE ROUTE ITSELF
@@ -110,6 +110,16 @@ class MapHandler
 				temp = temp->next;
 			}
 			temp->data.isDrawn = !temp->data.isDrawn;
+		}
+
+		void save()
+		{
+			allRoutes.save();
+		}
+
+		void load()
+		{
+			allRoutes.load();
 		}
 
 		

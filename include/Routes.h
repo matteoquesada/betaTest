@@ -2,6 +2,7 @@
 #include "Route.h"
 #include "Node.h"
 #include "Coordinates.h"
+#include <fstream>
 
 #include <iostream>
 using namespace std;
@@ -91,5 +92,13 @@ public:
         }
     }
 
+
+    void save() {
+
+    }
+
+    void load() {
+
+	}
 
 };
