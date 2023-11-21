@@ -136,6 +136,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Coordinates.h" />
+    <ClInclude Include="include\GUI.h" />
+    <ClInclude Include="include\MapHandler.h" />
     <ClInclude Include="include\Node.h" />
     <ClInclude Include="include\Route.h" />
     <ClInclude Include="include\Routes.h" />

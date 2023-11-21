@@ -1,2 +1,14 @@
 ﻿  ConsoleApplication1.cpp
+C:\Users\B450M R5\Documents\GitHub\betaTest\include\MapHandler.h(38,61): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  (compiling source file 'ConsoleApplication1.cpp')
+  
+C:\Users\B450M R5\Documents\GitHub\betaTest\include\MapHandler.h(38,41): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  (compiling source file 'ConsoleApplication1.cpp')
+  
+C:\Users\B450M R5\Documents\GitHub\betaTest\include\GUI.h(61,25): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  (compiling source file 'ConsoleApplication1.cpp')
+  
+C:\Users\B450M R5\Documents\GitHub\betaTest\include\GUI.h(61,22): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  (compiling source file 'ConsoleApplication1.cpp')
+  
   ConsoleApplication1.vcxproj -> C:\Users\B450M R5\Documents\GitHub\betaTest\x64\Debug\ConsoleApplication1.exe
