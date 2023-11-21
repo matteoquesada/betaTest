@@ -55,7 +55,9 @@ public:
 
 	// INITIALIZES A TEXTURE AND A SPRITE WITH THE GIVEN PARAMETERS
 	void initialize_texture_and_sprite(Texture& texture, Sprite& sprite, string dir, int x, int y, float x_scale, float y_scale) {
+
 		texture.loadFromFile(dir);
+		if(!texture.loadFromFile(dir)) cout << "ERROR LOADING TEXTURE" << endl;
 		sprite.setTexture(texture);
 		sprite.setScale(x_scale, y_scale);
 		sprite.setPosition(x, y);
@@ -127,8 +129,9 @@ public:
 				// CHECK IF THE MOUSE IS ON A BUTTON OF THE DOCK (outside the map)
 				else if (handle_mouse_click(event.mouseButton.x, event.mouseButton.y, create_route_sprite)) {
 					cout << "CREATE ROUTE" << endl;
-					//map_overlay.create_route();
-				}
+					map_overlay.addRoute(Route());
+					std::cout << "Current route: " << map_overlay.selectedRoute << "\n";
+					}
 				else if (handle_mouse_click(event.mouseButton.x, event.mouseButton.y, delete_route_sprite)) {
 					cout << "DELETE ROUTE" << endl;
 					//map_overlay.delete_route();
@@ -159,21 +162,21 @@ public:
 				}
 				// CHECK IF THE MOUSE IS ON THE MAP
 				else if (handle_mouse_click(event.mouseButton.x, event.mouseButton.y, map_sprite)) {
-					/*if (event.mouseButton.x > 0 && event.mouseButton.x < 1280 && event.mouseButton.y > 0 && event.mouseButton.y < 600) {
-						if (map_overlay.selected_route == -1) {
+					if (event.mouseButton.x > 0 && event.mouseButton.x < 1280 && event.mouseButton.y > 0 && event.mouseButton.y < 600) {
+						if (map_overlay.selectedRoute == -1) {
 							cout << "NO ROUTE SELECTED" << endl;
 						}
 						else {
-							if (map_overlay.delete_mode) {
+							if (map_overlay.deleteMode) {
 								cout << "DELETE NODE" << endl;
-								map_overlay.delete_node(event.mouseButton.x, event.mouseButton.y);
+								
 							}
 							else {
 								cout << "ADD NODE" << endl;
-								map_overlay.add_node(event.mouseButton.x, event.mouseButton.y);
+								
 							}
 						}
-					}*/
+					}
 				}
 			}
 		}
