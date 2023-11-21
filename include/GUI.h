@@ -85,9 +85,16 @@ public:
 		window.draw(load_sprite);
 		window.draw(show_hide_sprite);
 
+		// debug prints
+		cout << "Selected route: " << map_overlay.selectedRoute << "\n";
+		cout << "Delete mode: " << map_overlay.deleteMode << "\n";
+	
+
+
+
 		// DELETE MODE BEHAVIOR
 		// MOVES OUT OF THE SCREEN WHEN NOT ACTIVE - MAKING IT INVISIBLE AND UNCLICKABLE
-		/*if (map_overlay.delete_mode) {
+		if (map_overlay.deleteMode) {
 			delete_mode_on_sprite.setPosition(685, 615);
 			delete_mode_off_sprite.setPosition(-1000, -1000);
 			window.draw(delete_mode_on_sprite);
@@ -96,7 +103,7 @@ public:
 			delete_mode_off_sprite.setPosition(685, 615);
 			delete_mode_on_sprite.setPosition(-1000, -1000);  // Move offscreen when not visible
 			window.draw(delete_mode_off_sprite);
-		}*/
+		}
 	}
 
 	// HANDLES THE USER INPUT
@@ -106,23 +113,23 @@ public:
 
 				// CHECK IF THE MOUSE CLICKED ON A PALLETE COLOR
 				if (handle_mouse_click(event.mouseButton.x, event.mouseButton.y, red_sprite)) {
-					//map_overlay.change_route_color(Color::Red);
+					map_overlay.changeColor(Color::Red);
 					cout << "RED" << endl;
 				}
 				else if (handle_mouse_click(event.mouseButton.x, event.mouseButton.y, blue_sprite)) {
-					//map_overlay.change_route_color(Color::Blue);
+					map_overlay.changeColor(Color::Blue);
 					cout << "BLUE" << endl;
 				}
 				else if (handle_mouse_click(event.mouseButton.x, event.mouseButton.y, green_sprite)) {
-					//map_overlay.change_route_color(Color::Green);
+					map_overlay.changeColor(Color::Green);
 					cout << "GREEN" << endl;
 				}
 				else if (handle_mouse_click(event.mouseButton.x, event.mouseButton.y, yellow_sprite)) {
-					//map_overlay.change_route_color(Color::Yellow);
+					map_overlay.changeColor(Color::Red);
 					cout << "YELLOW" << endl;
 				}
 				else if (handle_mouse_click(event.mouseButton.x, event.mouseButton.y, orange_sprite)) {
-					//map_overlay.change_route_color(Color(255, 165, 0)); // NO DIRECT ACCESS TO ORANGE COLOR BY DEFAULT
+					map_overlay.changeColor(Color(255, 155, 0));
 					cout << "ORANGE" << endl;
 				}
 
@@ -134,15 +141,15 @@ public:
 					}
 				else if (handle_mouse_click(event.mouseButton.x, event.mouseButton.y, delete_route_sprite)) {
 					cout << "DELETE ROUTE" << endl;
-					//map_overlay.delete_route();
+					map_overlay.deleteRoute();
 				}
 				else if (handle_mouse_click(event.mouseButton.x, event.mouseButton.y, delete_mode_off_sprite)) {
 					cout << "DELETE MODE OFF" << endl;
-					//map_overlay.change_delete_mode();
+					map_overlay.changeDeleteMode();
 				}
 				else if (handle_mouse_click(event.mouseButton.x, event.mouseButton.y, delete_mode_on_sprite)) {
 					cout << "DELETE MODE ON" << endl;
-					//map_overlay.change_delete_mode();
+					map_overlay.changeDeleteMode();
 				}
 				else if (handle_mouse_click(event.mouseButton.x, event.mouseButton.y, save_sprite)) {
 					cout << "SAVE ROUTES" << endl;
@@ -154,11 +161,11 @@ public:
 				}
 				else if (handle_mouse_click(event.mouseButton.x, event.mouseButton.y, change_route_sprite)) {
 					cout << "CHANGE ROUTE" << endl;
-					//map_overlay.change_selected_route(5);
+						map_overlay.changeSelectedRoute();
 				}
 				else if (handle_mouse_click(event.mouseButton.x, event.mouseButton.y, show_hide_sprite)) {
 					cout << "SHOW/HIDE ROUTES" << endl;
-					//map_overlay.show_hide_route();
+					map_overlay.showHide();
 				}
 				// CHECK IF THE MOUSE IS ON THE MAP
 				else if (handle_mouse_click(event.mouseButton.x, event.mouseButton.y, map_sprite)) {
@@ -169,6 +176,8 @@ public:
 						else {
 							if (map_overlay.deleteMode) {
 								cout << "DELETE NODE" << endl;
+								Coordinates coords(event.mouseButton.x, event.mouseButton.y);
+								map_overlay.deletePointFromRoute(coords);
 								
 							}
 							else {

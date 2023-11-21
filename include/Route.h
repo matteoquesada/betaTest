@@ -20,6 +20,7 @@ public:
 
 	Route()
 	{
+		color = Color::White;
 		isDrawn = true;
 		head = nullptr;
 		tail = nullptr;
@@ -41,6 +42,33 @@ public:
 			tail = node;
 		}
 		size++;
+	}
+
+	// CHECK IF THE NODE IS WITHING 10 PIXELS OF ANOTHER NODE INSIDE THE ROUTE
+	void deleteNode(Coordinates data)
+	{
+	Node<Coordinates>* current = head;
+		while (current != nullptr) {
+			if (current->data.getX() > data.getX() - 10 && current->data.getX() < data.getX() + 10 &&
+				current->data.getY() > data.getY() - 10 && current->data.getY() < data.getY() + 10) {
+				if (current == head) {
+					head = head->next;
+					head->prev = nullptr;
+				}
+				else if (current == tail) {
+					tail = tail->prev;
+					tail->next = nullptr;
+				}
+				else {
+					current->prev->next = current->next;
+					current->next->prev = current->prev;
+				}
+				size--;
+				return;
+			}
+			current = current->next;
+		}
+
 	}
 
 	void draw(RenderWindow& window)
@@ -72,5 +100,10 @@ public:
 			window.draw(circle);
 			current = current->next;
 		}
+	}
+
+	void changeColor(Color color)
+	{
+		this->color = color;
 	}
 };

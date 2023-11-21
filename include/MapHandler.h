@@ -24,16 +24,22 @@ class MapHandler
 
 		MapHandler()
 		{
-			allRoutes = Routes();
-			selectedRoute = -1;
+			allRoutes = Routes(); // INITIALIZES WITH 0 SIZE
+			selectedRoute = -1; // NO ROUTE SELECTED AT THE BEGINNING
 			deleteMode = false;
 		}
 
 		void addRoute(Route route)
 		{
 			
-			allRoutes.addRoute(route); 
-			selectedRoute = allRoutes.size;
+			allRoutes.addRoute(route);  // SIZE BECOMES 1
+			selectedRoute = allRoutes.size; // SELECTED ROUTE BECOMES THE ONLY ROUTE
+		}
+
+		void deleteRoute()
+		{
+			allRoutes.deleteRoute(selectedRoute);
+			selectedRoute = -1;
 		}
 
 		// ADDS A POINT TO THE SELECTED ROUTE TO THE END OF THE ROUTE ITSELF
@@ -55,6 +61,60 @@ class MapHandler
 		{
 			allRoutes.draw(window);
 		}
+
+		void changeColor(Color color)
+		{
+			Node<Route>* temp = allRoutes.head;
+			for (int i = 0; i < selectedRoute - 1; i++)
+			{
+				temp = temp->next;
+			}
+			temp->data.changeColor(color);
+		}
+
+		// CHANGE SELECTED ROUTE BY CYCLING THROUGH THE LIST OF ROUTES
+		void changeSelectedRoute()
+		{
+			if (selectedRoute == allRoutes.size)
+			{
+				selectedRoute = 1;
+			}
+			else
+			{
+				selectedRoute++;
+			}
+
+		}
+
+		// CHANGE THE DELETE MODE
+		void changeDeleteMode()
+		{
+			deleteMode = !deleteMode;
+		}
+
+		// DELETE THE SELECTED POINT FROM THE SELECTED ROUTE WITHIN A RADIUS OF 10 PIXELS
+		void deletePointFromRoute(Coordinates point)
+		{
+			Node<Route>* temp = allRoutes.head;
+			for (int i = 0; i < selectedRoute - 1; i++)
+			{
+				temp = temp->next;
+			}
+			temp->data.deleteNode(point);
+			
+		}
+
+		void showHide()
+		{
+			Node<Route>* temp = allRoutes.head;
+			for (int i = 0; i < selectedRoute - 1; i++)
+			{
+				temp = temp->next;
+			}
+			temp->data.isDrawn = !temp->data.isDrawn;
+		}
+
+		
 
 
 

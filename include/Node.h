@@ -9,7 +9,8 @@ struct Node
 	Node(T data)
 	{
 		this->data = data;
-		this->next = nullptr;
+		next = nullptr;
+		prev = nullptr;
 	}
 
 };

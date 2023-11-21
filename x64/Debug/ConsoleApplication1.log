@@ -1,42 +1,42 @@
 ﻿  ConsoleApplication1.cpp
-C:\Users\B450M R5\Documents\GitHub\betaTest\include\Route.h(56,70): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\B450M R5\Documents\GitHub\betaTest\include\Route.h(84,70): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
   (compiling source file 'ConsoleApplication1.cpp')
   
-C:\Users\B450M R5\Documents\GitHub\betaTest\include\Route.h(56,44): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\B450M R5\Documents\GitHub\betaTest\include\Route.h(84,44): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
   (compiling source file 'ConsoleApplication1.cpp')
   
-C:\Users\B450M R5\Documents\GitHub\betaTest\include\Route.h(60,70): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\B450M R5\Documents\GitHub\betaTest\include\Route.h(88,70): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
   (compiling source file 'ConsoleApplication1.cpp')
   
-C:\Users\B450M R5\Documents\GitHub\betaTest\include\Route.h(60,44): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\B450M R5\Documents\GitHub\betaTest\include\Route.h(88,44): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
   (compiling source file 'ConsoleApplication1.cpp')
   
-C:\Users\B450M R5\Documents\GitHub\betaTest\include\Route.h(66,62): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
-C:\Users\B450M R5\Documents\GitHub\betaTest\include\Route.h(66,62): warning C4244:         with
-C:\Users\B450M R5\Documents\GitHub\betaTest\include\Route.h(66,62): warning C4244:         [
-C:\Users\B450M R5\Documents\GitHub\betaTest\include\Route.h(66,62): warning C4244:             T=float
-C:\Users\B450M R5\Documents\GitHub\betaTest\include\Route.h(66,62): warning C4244:         ]
+C:\Users\B450M R5\Documents\GitHub\betaTest\include\Route.h(94,62): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+C:\Users\B450M R5\Documents\GitHub\betaTest\include\Route.h(94,62): warning C4244:         with
+C:\Users\B450M R5\Documents\GitHub\betaTest\include\Route.h(94,62): warning C4244:         [
+C:\Users\B450M R5\Documents\GitHub\betaTest\include\Route.h(94,62): warning C4244:             T=float
+C:\Users\B450M R5\Documents\GitHub\betaTest\include\Route.h(94,62): warning C4244:         ]
   (compiling source file 'ConsoleApplication1.cpp')
   
-C:\Users\B450M R5\Documents\GitHub\betaTest\include\Route.h(66,40): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
-C:\Users\B450M R5\Documents\GitHub\betaTest\include\Route.h(66,40): warning C4244:         with
-C:\Users\B450M R5\Documents\GitHub\betaTest\include\Route.h(66,40): warning C4244:         [
-C:\Users\B450M R5\Documents\GitHub\betaTest\include\Route.h(66,40): warning C4244:             T=float
-C:\Users\B450M R5\Documents\GitHub\betaTest\include\Route.h(66,40): warning C4244:         ]
+C:\Users\B450M R5\Documents\GitHub\betaTest\include\Route.h(94,40): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+C:\Users\B450M R5\Documents\GitHub\betaTest\include\Route.h(94,40): warning C4244:         with
+C:\Users\B450M R5\Documents\GitHub\betaTest\include\Route.h(94,40): warning C4244:         [
+C:\Users\B450M R5\Documents\GitHub\betaTest\include\Route.h(94,40): warning C4244:             T=float
+C:\Users\B450M R5\Documents\GitHub\betaTest\include\Route.h(94,40): warning C4244:         ]
   (compiling source file 'ConsoleApplication1.cpp')
   
-C:\Users\B450M R5\Documents\GitHub\betaTest\include\Route.h(67,74): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
-C:\Users\B450M R5\Documents\GitHub\betaTest\include\Route.h(67,74): warning C4244:         with
-C:\Users\B450M R5\Documents\GitHub\betaTest\include\Route.h(67,74): warning C4244:         [
-C:\Users\B450M R5\Documents\GitHub\betaTest\include\Route.h(67,74): warning C4244:             T=float
-C:\Users\B450M R5\Documents\GitHub\betaTest\include\Route.h(67,74): warning C4244:         ]
+C:\Users\B450M R5\Documents\GitHub\betaTest\include\Route.h(95,74): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+C:\Users\B450M R5\Documents\GitHub\betaTest\include\Route.h(95,74): warning C4244:         with
+C:\Users\B450M R5\Documents\GitHub\betaTest\include\Route.h(95,74): warning C4244:         [
+C:\Users\B450M R5\Documents\GitHub\betaTest\include\Route.h(95,74): warning C4244:             T=float
+C:\Users\B450M R5\Documents\GitHub\betaTest\include\Route.h(95,74): warning C4244:         ]
   (compiling source file 'ConsoleApplication1.cpp')
   
-C:\Users\B450M R5\Documents\GitHub\betaTest\include\Route.h(67,46): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
-C:\Users\B450M R5\Documents\GitHub\betaTest\include\Route.h(67,46): warning C4244:         with
-C:\Users\B450M R5\Documents\GitHub\betaTest\include\Route.h(67,46): warning C4244:         [
-C:\Users\B450M R5\Documents\GitHub\betaTest\include\Route.h(67,46): warning C4244:             T=float
-C:\Users\B450M R5\Documents\GitHub\betaTest\include\Route.h(67,46): warning C4244:         ]
+C:\Users\B450M R5\Documents\GitHub\betaTest\include\Route.h(95,46): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+C:\Users\B450M R5\Documents\GitHub\betaTest\include\Route.h(95,46): warning C4244:         with
+C:\Users\B450M R5\Documents\GitHub\betaTest\include\Route.h(95,46): warning C4244:         [
+C:\Users\B450M R5\Documents\GitHub\betaTest\include\Route.h(95,46): warning C4244:             T=float
+C:\Users\B450M R5\Documents\GitHub\betaTest\include\Route.h(95,46): warning C4244:         ]
   (compiling source file 'ConsoleApplication1.cpp')
   
 C:\Users\B450M R5\Documents\GitHub\betaTest\include\GUI.h(63,25): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
