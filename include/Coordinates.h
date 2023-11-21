@@ -8,8 +8,8 @@ public:
 
 	Coordinates()
 	{
-		this->x = 0;
-		this->y = 0;
+		x = 0;
+		y = 0;
 	}
 
 	Coordinates(int x, int y)
@@ -20,12 +20,12 @@ public:
 
 	int getX()
 	{
-		return this->x;
+		return x;
 	}
 
 	int getY()
 	{
-		return this->y;
+		return y;
 	}
 
 	void setX(int x)

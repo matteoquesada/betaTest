@@ -7,6 +7,9 @@
 #include <SFML/Graphics.hpp>
 using namespace sf;
 
+#include <iostream>
+using namespace std;
+
 
 class MapHandler
 {
@@ -21,7 +24,7 @@ class MapHandler
 
 		MapHandler()
 		{
-			this->allRoutes = Routes();
+			allRoutes = Routes();
 			selectedRoute = -1;
 			deleteMode = false;
 		}
@@ -29,41 +32,28 @@ class MapHandler
 		void addRoute(Route route)
 		{
 			
-			this->allRoutes.addRoute(route);
-			selectedRoute = this->allRoutes.size;
+			allRoutes.addRoute(route); 
+			selectedRoute = allRoutes.size;
 		}
 
 		// ADDS A POINT TO THE SELECTED ROUTE TO THE END OF THE ROUTE ITSELF
+		// BASED ON THE SELECTED ROUTE IT CYCLES UNTIL IT FINDS THE SELECTED ROUTE, THEN IT ADDS THE POINT TO THE END OF THE ROUTE
 		void addPointToRoute(Coordinates point)
 		{
-			if (this->selectedRoute != -1)
+			Node<Route>* temp = allRoutes.head;
+			for (int i = 0; i < selectedRoute - 1; i++)
 			{
-				Node<Route>* temp = this->allRoutes.head;
-				for (int i = 0; i < this->selectedRoute; i++)
-				{
-					temp = temp->next;
-				}
-				temp->data.addNode(point);
+				temp = temp->next;
 			}
+			temp->data.addNode(point);
+
 			
 		}
 
+		// CALLS THE DRAW METHOD ON CLASS ROUTES, WHICH CALLS INIDIVIDUAL DRAW METHODS ON EACH ROUTE
 		void draw(RenderWindow& window)
 		{
-			Node<Route>* temp = this->allRoutes.head;
-			while (temp != nullptr)
-			{
-				Node<Coordinates>* temp2 = temp->data.head;
-				while (temp2 != nullptr)
-				{
-					CircleShape circle(5);
-					circle.setFillColor(Color::Red);
-					circle.setPosition(temp2->data.getX(), temp2->data.getY());
-					window.draw(circle);
-					temp2 = temp2->next;
-				}
-				temp = temp->next;
-			}
+			allRoutes.draw(window);
 		}
 
 

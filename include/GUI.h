@@ -173,7 +173,8 @@ public:
 							}
 							else {
 								cout << "ADD NODE" << endl;
-								
+								Coordinates coords(event.mouseButton.x, event.mouseButton.y);
+								map_overlay.addPointToRoute(coords);
 							}
 						}
 					}

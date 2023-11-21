@@ -39,12 +39,6 @@ C:\Users\B450M R5\Documents\GitHub\betaTest\include\Route.h(67,46): warning C424
 C:\Users\B450M R5\Documents\GitHub\betaTest\include\Route.h(67,46): warning C4244:         ]
   (compiling source file 'ConsoleApplication1.cpp')
   
-C:\Users\B450M R5\Documents\GitHub\betaTest\include\MapHandler.h(61,61): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-  (compiling source file 'ConsoleApplication1.cpp')
-  
-C:\Users\B450M R5\Documents\GitHub\betaTest\include\MapHandler.h(61,41): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-  (compiling source file 'ConsoleApplication1.cpp')
-  
 C:\Users\B450M R5\Documents\GitHub\betaTest\include\GUI.h(63,25): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
   (compiling source file 'ConsoleApplication1.cpp')
   

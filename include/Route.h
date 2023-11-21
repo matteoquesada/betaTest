@@ -21,26 +21,26 @@ public:
 	Route()
 	{
 		isDrawn = true;
-		this->head = nullptr;
-		this->tail = nullptr;
-		this->size = 0;
+		head = nullptr;
+		tail = nullptr;
+		size = 0;
 	}
 
 	void addNode(Coordinates data)
 	{
 		Node<Coordinates>* node = new Node<Coordinates>(data);
-		if (this->head == nullptr)
+		if (head == nullptr)
 		{
-			this->head = node;
-			this->tail = node;
+			head = node;
+			tail = node;
 		}
 		else
 		{
-			this->tail->next = node;
-			node->prev = this->tail;
-			this->tail = node;
+			tail->next = node;
+			node->prev = tail;
+			tail = node;
 		}
-		this->size++;
+		size++;
 	}
 
 	void draw(RenderWindow& window)

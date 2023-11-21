@@ -3,6 +3,8 @@
 #include "Node.h"
 #include "Coordinates.h"
 
+#include <iostream>
+
 class Routes {
 public:
 
@@ -11,26 +13,37 @@ public:
 
 	Routes()
 	{
-		this->head = nullptr;
-		this->size = 0;
+		head = nullptr;
+		size = 0;
 	}
 
 	void addRoute(Route route)
 	{
+		if (head == nullptr) { std::cout << "head is null" << std::endl; }
 		Node<Route>* node = new Node<Route>(route);
-		if (this->head == nullptr)
+		if (head == nullptr)
 		{
-			this->head = node;
+			head = node;
 		}
 		else
 		{
-			Node<Route>* temp = this->head;
+			Node<Route>* temp = head;
 			while (temp->next != nullptr)
 			{
 				temp = temp->next;
 			}
 			temp->next = node;
 		}
-		this->size++;
+		size++;
+	}
+
+	void draw(sf::RenderWindow& window)
+	{
+		Node<Route>* temp = head;
+		while (temp != nullptr)
+		{
+			temp->data.draw(window);
+			temp = temp->next;
+		}
 	}
 };
