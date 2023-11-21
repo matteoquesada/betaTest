@@ -118,7 +118,7 @@ public:
 					cout << "GREEN" << endl;
 				}
 				else if (handle_mouse_click(event.mouseButton.x, event.mouseButton.y, yellow_sprite)) {
-					map_overlay.changeColor(Color::Red);
+					map_overlay.changeColor(Color::Yellow);
 					cout << "YELLOW" << endl;
 				}
 				else if (handle_mouse_click(event.mouseButton.x, event.mouseButton.y, orange_sprite)) {
@@ -131,7 +131,7 @@ public:
 					cout << "CREATE ROUTE" << endl;
 					map_overlay.addRoute(Route());
 					std::cout << "Current route: " << map_overlay.selectedRoute << "\n";
-					}
+				}
 				else if (handle_mouse_click(event.mouseButton.x, event.mouseButton.y, delete_route_sprite)) {
 					cout << "DELETE ROUTE" << endl;
 					map_overlay.deleteRoute();
@@ -146,16 +146,16 @@ public:
 				}
 				else if (handle_mouse_click(event.mouseButton.x, event.mouseButton.y, save_sprite)) {
 					cout << "SAVE ROUTES" << endl;
-					//map_overlay.save_routes();
+					map_overlay.save();
 				}
 				else if (handle_mouse_click(event.mouseButton.x, event.mouseButton.y, load_sprite)) {
 					cout << "LOAD ROUTES" << endl;
-					//map_overlay.load_routes();
+					map_overlay.load();
 				}
 				else if (handle_mouse_click(event.mouseButton.x, event.mouseButton.y, change_route_sprite)) {
 					cout << "CHANGE ROUTE" << endl;
-						map_overlay.changeSelectedRoute();
-						cout << "Current route: " << map_overlay.selectedRoute << "\n";
+					map_overlay.changeSelectedRoute();
+					cout << "Current route: " << map_overlay.selectedRoute << "\n";
 				}
 				else if (handle_mouse_click(event.mouseButton.x, event.mouseButton.y, show_hide_sprite)) {
 					cout << "SHOW/HIDE ROUTES" << endl;
@@ -172,7 +172,7 @@ public:
 								cout << "DELETE NODE" << endl;
 								Coordinates coords(event.mouseButton.x, event.mouseButton.y);
 								map_overlay.deletePointFromRoute(coords);
-								
+
 							}
 							else {
 								cout << "ADD NODE" << endl;
@@ -184,7 +184,7 @@ public:
 				}
 			}
 		}
-	}
+	};
 
 	// HANDLES THE MOUSE CLICK
 	bool handle_mouse_click(int x, int y, Sprite& button) {

@@ -119,7 +119,8 @@ class MapHandler
 
 		void load()
 		{
-			allRoutes.load();
+			Node<Route>* ptrToHead = allRoutes.head;
+			allRoutes.load(ptrToHead);
 		}
 
 		
