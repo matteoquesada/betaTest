@@ -1,8 +1,8 @@
 #pragma once
 #include "Routes.h"
 #include "Node.h"
-#include "Coordinates.h"
-#include "Route.h"
+
+
 
 #include <SFML/Graphics.hpp>
 using namespace sf;
@@ -26,7 +26,7 @@ class MapHandler
 		{
 			allRoutes = Routes(); // INITIALIZES WITH 0 SIZE
 			selectedRoute = -1; // NO ROUTE SELECTED AT THE BEGINNING
-			deleteMode = false;
+			deleteMode = false; // DELETE MODE IS OFF AT THE BEGINNING
 		}
 
 		void addRoute(Route route)
@@ -36,10 +36,17 @@ class MapHandler
 			selectedRoute = allRoutes.size; // SELECTED ROUTE BECOMES THE ONLY ROUTE
 		}
 
+		// DELETES THE SELECTED ROUTE AND SELECTS THE LAST ROUTE IN THE LIST
+		// ALLOWS TO QUICKLY DELETE ROUTES IN CHAIN
 		void deleteRoute()
 		{
 			allRoutes.deleteRoute(selectedRoute);
-			selectedRoute = 0;
+			if(allRoutes.size == 0) {
+				selectedRoute = -1;
+			}
+			else if (selectedRoute > allRoutes.size) {
+				selectedRoute = allRoutes.size;
+			}
 		}
 
 		// ADDS A POINT TO THE SELECTED ROUTE TO THE END OF THE ROUTE ITSELF
@@ -75,8 +82,12 @@ class MapHandler
 		// CHANGE SELECTED ROUTE BY CYCLING THROUGH THE LIST OF ROUTES
 		void changeSelectedRoute()
 		{
-			if (selectedRoute < allRoutes.size) {
+			if (selectedRoute < allRoutes.size && selectedRoute != -1) {
 				selectedRoute++;
+			}
+			else if (selectedRoute == -1) {
+				selectedRoute = allRoutes.size;
+				cout << "AAASelected route: " << selectedRoute << endl;
 			}
 			else {
 				selectedRoute = 1;
@@ -151,41 +162,41 @@ class MapHandler
 				return;
 			}
 
-			string xxx;
-			while (getline(file, xxx)) {
-				cout << xxx << endl;
-				if (xxx == "<Route>") {
+			string line;
+			while (getline(file, line)) {
+				cout << line << endl;
+				if (line == "<Route>") {
 					// Start a new route
 					Route route;
-					getline(file, xxx); // Skip the "<Route>" line
+					getline(file, line); // Skip the "<Route>" line
 
 					int r, g, b;
-					xxx.erase(0, 7); // Remove the "Color: " part
+					line.erase(0, 7); // Remove the "Color: " part
 
-					r = stoi(xxx.substr(0, xxx.find(" "))); // Get the R channel
-					xxx.erase(0, xxx.find(" ") + 1); // Remove the R channel
-					g = stoi(xxx.substr(0, xxx.find(" "))); // Get the G channel
-					xxx.erase(0, xxx.find(" ") + 1); // Remove the G channel
-					b = stoi(xxx.substr(0, xxx.find(" "))); // Get the B channel
-					xxx.erase(0, xxx.find(" ") + 1); // Remove the B channel
+					r = stoi(line.substr(0, line.find(" "))); // Get the R channel
+					line.erase(0, line.find(" ") + 1); // Remove the R channel
+					g = stoi(line.substr(0, line.find(" "))); // Get the G channel
+					line.erase(0, line.find(" ") + 1); // Remove the G channel
+					b = stoi(line.substr(0, line.find(" "))); // Get the B channel
+					line.erase(0, line.find(" ") + 1); // Remove the B channel
 					cout << "Found R: " << r << " Found G: " << g << " Found B: " << b << endl;
 
 					Color color(r, g, b); // CREATE THE COLOR BASED ON THE VALUES WE JUST GOT
 					route.color = color; // ASSIGN THE COLOR TO THE ROUTE
 
 					// Now we need to get the coordinates
-					while (getline(file, xxx)) {
-						if (xxx == "</>") {
+					while (getline(file, line)) {
+						if (line == "</>") {
 							// End of the route
 							break;
 						}
 						else {
 							// Add the coordinates to the route
 							int x, y;
-							x = stoi(xxx.substr(0, xxx.find(" "))); // Get the X coordinate
-							xxx.erase(0, xxx.find(" ") + 1); // Remove the X coordinate
-							y = stoi(xxx.substr(0, xxx.find(" "))); // Get the Y coordinate
-							xxx.erase(0, xxx.find(" ") + 1); // Remove the Y coordinate
+							x = stoi(line.substr(0, line.find(" "))); // Get the X coordinate
+							line.erase(0, line.find(" ") + 1); // Remove the X coordinate
+							y = stoi(line.substr(0, line.find(" "))); // Get the Y coordinate
+							line.erase(0, line.find(" ") + 1); // Remove the Y coordinate
 							cout << "Found X: " << x << " Found Y: " << y << endl;
 							Coordinates coordinates(x, y); // CREATE THE COORDINATES BASED ON THE VALUES WE JUST GOT
 							route.addNode(coordinates); // ADD THE NODE TO THE ROUTE
@@ -205,5 +216,6 @@ class MapHandler
 				}
 			}
 			cout << selectedRoute << endl;
+			selectedRoute = allRoutes.size - 1;
 		}
 };

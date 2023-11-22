@@ -27,7 +27,7 @@ public:
 	{
 		if (head == nullptr) {
 			head = new Node<Route>(route);
-			size = 1;
+			size++;
 		}
 		else{
 			Node<Route>* temp = head;
@@ -38,6 +38,7 @@ public:
 			temp->next = new Node<Route>(route);
 			size++;
 		}
+        cout << size;
 	}
 
 	void draw(RenderWindow& window)
@@ -62,10 +63,7 @@ public:
                 head = head->next;
                 delete temp;
                 size--;
-            }
-            else
-            {
-                cout << "List is empty" << endl;
+          
             }
         }
         else if (index > 1 && index <= size)
@@ -85,14 +83,17 @@ public:
             Node<Route>* nodeToDelete = temp->next;
             temp->next = nodeToDelete->next;
             delete nodeToDelete;
+            size--;
 
         }
         else
         {
             cout << "INVALID INDEX" << endl;
         }
+        cout << size;
     }
 
+    
 
     
 
