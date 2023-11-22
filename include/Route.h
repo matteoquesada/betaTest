@@ -6,27 +6,26 @@ using namespace sf;
 
 class Route
 {
-private:
-
 public:
 
+	// PUBLIC TO ALLOW EASY ACCESS ON THE NODES AND VARIABLES
 	Node<Coordinates>* head;
 	Node<Coordinates>* tail;
+	Color color;
+	bool isDrawn;
 	int size;
 
-	Color color;
-
-	bool isDrawn;
-
+	// DEFAULT CONSTRUCTOR
 	Route()
 	{
-		color = Color::White;
+		color = Color::White; // DEFAULT COLOR IS WHITE
 		isDrawn = true;
 		head = nullptr;
 		tail = nullptr;
 		size = 0;
 	}
 
+	// ADDS A NODE TO THE END OF THE ROUTE
 	void addNode(Coordinates data)
 	{
 		Node<Coordinates>* node = new Node<Coordinates>(data);
@@ -50,7 +49,8 @@ public:
 	Node<Coordinates>* current = head;
 		while (current != nullptr) {
 			if (current->data.getX() > data.getX() - 10 && current->data.getX() < data.getX() + 10 &&
-				current->data.getY() > data.getY() - 10 && current->data.getY() < data.getY() + 10) {
+				current->data.getY() > data.getY() - 10 && current->data.getY() < data.getY() + 10) 
+			{
 				if (current == head) {
 					head = head->next;
 					head->prev = nullptr;
@@ -64,13 +64,22 @@ public:
 					current->next->prev = current->prev;
 				}
 				size--;
-				return;
+				return; // IF THE NODE IS FOUND, RETURN
 			}
-			current = current->next;
+			current = current->next; // IF THE NODE IS NOT FOUND, CONTINUE CYCLING THROUGH THE LIST
 		}
 
 	}
 
+	// CHANGE THE COLOR OF THE ROUTE
+	void changeColor(Color color)
+	{
+		this->color = color;
+	}
+
+	// DRAW THE ROUTE ITSELF
+	// CYCLES THROUGH THE NODES AND DRAWS A LINE BETWEEN THEM
+	// THE LINE CONSISTS OF TWO VERTICES WITH THE COORDINATES OF THE NODES
 	void draw(RenderWindow& window)
 	{
 		if (!isDrawn) return;
@@ -79,9 +88,9 @@ public:
 		while (current != nullptr) {
 
 			// DRAWING THE NODE ITSELF WITH A BLACK BORDER
-			CircleShape circle(5);
-			circle.setFillColor(color);
-			circle.setPosition(current->data.getX() - 3, current->data.getY() - 3);
+			CircleShape point(5);
+			point.setFillColor(color);
+			point.setPosition(current->data.getX() - 3, current->data.getY() - 3);
 
 			CircleShape border(6);
 			border.setFillColor(Color::Black);
@@ -89,21 +98,16 @@ public:
 
 			// DRAWING THE LINE BETWEEN NODES
 			if (current->next != nullptr) {
-				Vertex line[] =
+				Vertex line[] = // ARRAY OF VERTICES
 				{
-					Vertex(Vector2f(current->data.getX(), current->data.getY())),
-					Vertex(Vector2f(current->next->data.getX(), current->next->data.getY()))
+					Vertex(Vector2f(current->data.getX(), current->data.getY())), // FIRST VERTEX
+					Vertex(Vector2f(current->next->data.getX(), current->next->data.getY())) // SECOND VERTEX
 				};
-				window.draw(line, 2, Lines);
+				window.draw(line, 2, Lines); // DRAW THE LINE WITH THE TWO VERTICES AND THE VERTEX COUNT
 			}
 			window.draw(border);
-			window.draw(circle);
+			window.draw(point);
 			current = current->next;
 		}
-	}
-
-	void changeColor(Color color)
-	{
-		this->color = color;
 	}
 };

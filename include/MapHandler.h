@@ -2,220 +2,169 @@
 #include "Routes.h"
 #include "Node.h"
 
-
-
 #include <SFML/Graphics.hpp>
 using namespace sf;
 
 #include <iostream>
 using namespace std;
 
+class MapHandler {
+private:
+    Routes allRoutes;
 
-class MapHandler
-{
+public:
+    int selectedRoute;
+    bool deleteMode;
 
-	Routes allRoutes;
+    MapHandler() {
+        allRoutes = Routes(); // INITIALIZES WITH 0 SIZE
+        selectedRoute = -1; // NO ROUTE SELECTED AT THE BEGINNING
+        deleteMode = false; // DELETE MODE IS OFF AT THE BEGINNING
+    }
 
-	public:
+    void addRoute(Route route) {
+        allRoutes.addRoute(route);  // SIZE BECOMES 1
+        selectedRoute = allRoutes.size; // SELECTED ROUTE BECOMES THE ONLY ROUTE
+    }
 
-		int selectedRoute;
+    // DELETES THE SELECTED ROUTE AND SELECTS THE LAST ROUTE IN THE LIST
+    // ALLOWS TO QUICKLY DELETE ROUTES IN CHAIN
+    void deleteRoute() {
+        allRoutes.deleteRoute(selectedRoute);
+        if (allRoutes.size == 0) selectedRoute = -1;
+        else if (selectedRoute > allRoutes.size) selectedRoute = allRoutes.size;
+    }
 
-		bool deleteMode;
+    // ADDS A POINT TO THE SELECTED ROUTE TO THE END OF THE ROUTE ITSELF
+    // BASED ON THE SELECTED ROUTE IT CYCLES UNTIL IT FINDS THE SELECTED ROUTE, THEN IT ADDS THE POINT TO THE END OF THE ROUTE
+    void addPoint(Coordinates point) {
+        Node<Route>* temp = allRoutes.head;
+        for (int i = 0; i < selectedRoute - 1; i++) temp = temp->next;
+        temp->data.addNode(point);
+    }
 
-		MapHandler()
-		{
-			allRoutes = Routes(); // INITIALIZES WITH 0 SIZE
-			selectedRoute = -1; // NO ROUTE SELECTED AT THE BEGINNING
-			deleteMode = false; // DELETE MODE IS OFF AT THE BEGINNING
-		}
+    // CALLS THE DRAW METHOD ON CLASS ROUTES, WHICH CALLS INIDIVIDUAL DRAW METHODS ON EACH ROUTE
+    void draw(RenderWindow& window) {
+        allRoutes.draw(window);
+    }
 
-		void addRoute(Route route)
-		{
-			
-			allRoutes.addRoute(route);  // SIZE BECOMES 1
-			selectedRoute = allRoutes.size; // SELECTED ROUTE BECOMES THE ONLY ROUTE
-		}
+    void changeColor(Color color) {
+        if(selectedRoute == -1) return;
+        Node<Route>* temp = allRoutes.head;
+        for (int i = 0; i < selectedRoute - 1; i++) temp = temp->next;
+        temp->data.changeColor(color);
+    }
 
-		// DELETES THE SELECTED ROUTE AND SELECTS THE LAST ROUTE IN THE LIST
-		// ALLOWS TO QUICKLY DELETE ROUTES IN CHAIN
-		void deleteRoute()
-		{
-			allRoutes.deleteRoute(selectedRoute);
-			if(allRoutes.size == 0) {
-				selectedRoute = -1;
-			}
-			else if (selectedRoute > allRoutes.size) {
-				selectedRoute = allRoutes.size;
-			}
-		}
+    // CHANGE SELECTED ROUTE BY CYCLING THROUGH THE LIST OF ROUTES
+    void switchRoute() {
+        if (selectedRoute < allRoutes.size && selectedRoute != -1) selectedRoute++;
+        else if (selectedRoute == -1) {
+            selectedRoute = allRoutes.size;
+            cout << "AAASelected route: " << selectedRoute << endl;
+        }
+        else selectedRoute = 1;
+    }
 
-		// ADDS A POINT TO THE SELECTED ROUTE TO THE END OF THE ROUTE ITSELF
-		// BASED ON THE SELECTED ROUTE IT CYCLES UNTIL IT FINDS THE SELECTED ROUTE, THEN IT ADDS THE POINT TO THE END OF THE ROUTE
-		void addPointToRoute(Coordinates point)
-		{
-			Node<Route>* temp = allRoutes.head;
-			for (int i = 0; i < selectedRoute - 1; i++)
-			{
-				temp = temp->next;
-			}
-			temp->data.addNode(point);
+    // CHANGE THE DELETE MODE
+    void toggleDelete() {
+        deleteMode = !deleteMode;
+    }
 
-			
-		}
+    // DELETE THE SELECTED POINT FROM THE SELECTED ROUTE WITHIN A RADIUS OF 10 PIXELS
+    void deletePoint(Coordinates point) {
+        Node<Route>* temp = allRoutes.head;
+        for (int i = 0; i < selectedRoute - 1; i++) temp = temp->next;
+        temp->data.deleteNode(point);
+    }
 
-		// CALLS THE DRAW METHOD ON CLASS ROUTES, WHICH CALLS INIDIVIDUAL DRAW METHODS ON EACH ROUTE
-		void draw(RenderWindow& window)
-		{
-			allRoutes.draw(window);
-		}
+    // TOGGLE THE DRAWING OF THE SELECTED ROUTE
+    void showHide() {
+        if(selectedRoute == -1) return; // IF NO ROUTE IS SELECTED
+        Node<Route>* temp = allRoutes.head;
+        for (int i = 0; i < selectedRoute - 1; i++) temp = temp->next;
+        temp->data.isDrawn = !temp->data.isDrawn;
+    }
 
-		void changeColor(Color color)
-		{
-			Node<Route>* temp = allRoutes.head;
-			for (int i = 0; i < selectedRoute - 1; i++)
-			{
-				temp = temp->next;
-			}
-			temp->data.changeColor(color);
-		}
+    // SAVE THE ROUTES TO A FILE
+    // FORMAT:
+    // <Route>
+    // Color: 255 255 255
+    // 100 100
+    // 200 200
+    // 300 300
+    // </>
+    void save() {
+        ofstream file("userdata/routes.txt");
+        if (!file.is_open()) {
+            cerr << "ERROR GARRAFAL: SE QUEMARON LOS FRIJOLES." << endl;
+            return;
+        }
 
-		// CHANGE SELECTED ROUTE BY CYCLING THROUGH THE LIST OF ROUTES
-		void changeSelectedRoute()
-		{
-			if (selectedRoute < allRoutes.size && selectedRoute != -1) {
-				selectedRoute++;
-			}
-			else if (selectedRoute == -1) {
-				selectedRoute = allRoutes.size;
-				cout << "AAASelected route: " << selectedRoute << endl;
-			}
-			else {
-				selectedRoute = 1;
-			}
+        Node<Route>* temp = allRoutes.head;
+        Node<Coordinates>* subTemp = nullptr;
 
-		}
+        while (temp != nullptr) {
+            file << "<Route>" << endl; // START OF ROUTE
+            file << "Color: ";
+            file << static_cast<int>(temp->data.color.r) << " " // CASTING TO INT TO AVOID PRINTING ASCII VALUES
+                << static_cast<int>(temp->data.color.g) << " "
+                << static_cast<int>(temp->data.color.b) << std::endl; 
 
-		// CHANGE THE DELETE MODE
-		void changeDeleteMode()
-		{
-			deleteMode = !deleteMode;
-		}
+            subTemp = temp->data.head; // SUBTEMP IS A POINTER TO THE HEAD OF THE LIST OF COORDINATES
 
-		// DELETE THE SELECTED POINT FROM THE SELECTED ROUTE WITHIN A RADIUS OF 10 PIXELS
-		void deletePointFromRoute(Coordinates point)
-		{
-			Node<Route>* temp = allRoutes.head;
-			for (int i = 0; i < selectedRoute - 1; i++)
-			{
-				temp = temp->next;
-			}
-			temp->data.deleteNode(point);
-			
-		}
+            while (subTemp != nullptr) {
+                file << subTemp->data.getX() << " " << subTemp->data.getY() << endl; // PRINTS THE X AND Y VALUES OF THE COORDINATES
+                subTemp = subTemp->next;
+            }
+            file << "</>" << endl; // END OF ROUTE
+            temp = temp->next;
+        }
+    }
 
-		void showHide()
-		{
-			Node<Route>* temp = allRoutes.head;
-			for (int i = 0; i < selectedRoute - 1; i++)
-			{
-				temp = temp->next;
-			}
-			temp->data.isDrawn = !temp->data.isDrawn;
-		}
+    // LOAD THE ROUTES FROM A FILE FROM THE SAME FORMAT AS THE SAVE METHOD
+    void load() {
+        Node<Route>* ptrToHead = allRoutes.head;
+        ifstream file("userdata/routes.txt");
+        if (!file.is_open()) {
+            cerr << "ERROR GARRAFAL: SE QUEMARON LOS FRIJOLES." << endl;
+            return;
+        }
 
-		void save()
-		{
-			ofstream file("userdata/routes.txt");
-			if (!file.is_open()) {
-				cerr << "ERROR GARRAFAL: SE QUEMARON LOS FRIJOLES." << endl;
-				return;
-			}
+        string line;
+        while (getline(file, line)) {
+            if (line == "<Route>") { // START OF ROUTE
+                Route route;
+                getline(file, line);
 
-			Node<Route>* temp = allRoutes.head; // MAKE A TEMPORARY POINTER TO THE HEAD OF THE LIST
-			Node<Coordinates>* subTemp = nullptr; // MAKE A TEMPORARY POINTER TO THE HEAD OF THE SUB-LIST
+                int r, g, b;
+                line.erase(0, 7);
 
-			while (temp != nullptr) { // ITERATE THROUGH THE ROUTES
+                // ALLOWS TO SET CUSTOM COLORS IF WANTED
+                r = stoi(line.substr(0, line.find(" "))); // R CHANNEL OF THE COLOR
+                line.erase(0, line.find(" ") + 1);
+                g = stoi(line.substr(0, line.find(" "))); // G CHANNEL OF THE COLOR
+                line.erase(0, line.find(" ") + 1);
+                b = stoi(line.substr(0, line.find(" "))); // B CHANNEL OF THE COLOR
+                line.erase(0, line.find(" ") + 1);
 
-				file << "<Route>" << endl;
-				file << "Color: ";
-				file << static_cast<int>(temp->data.color.r) << " " // SAVE THE R CHANNEL INTO THE FILE
-					<< static_cast<int>(temp->data.color.g) << " " // SAVE THE G CHANNEL INTO THE FILE
-					<< static_cast<int>(temp->data.color.b) << std::endl; // SAVE THE B CHANNEL INTO THE FILE
+                Color color(r, g, b);
+                route.color = color; // SETS THE COLOR OF THE ROUTE
 
-				subTemp = temp->data.head; // MAKE A TEMPORARY POINTER TO THE HEAD OF THE SUB-LIST
-
-				while (subTemp != nullptr) { // ITERATE THROUGH THE SUB-LIST
-					file << subTemp->data.getX() << " " << subTemp->data.getY() << endl; // SAVE THE COORDINATES INTO THE FILE
-					subTemp = subTemp->next; // MOVE TO THE NEXT NODE
-				}
-				file << "</>" << endl; // END OF THE ROUTE
-				temp = temp->next; // MOVE TO THE NEXT ROUTE
-			}
-		}
-
-		void load()
-		{
-			Node<Route>* ptrToHead = allRoutes.head;
-			ifstream file("userdata/routes.txt");
-			if (!file.is_open()) {
-				cerr << "ERROR GARRAFAL: SE QUEMARON LOS FRIJOLES." << endl;
-				return;
-			}
-
-			string line;
-			while (getline(file, line)) {
-				cout << line << endl;
-				if (line == "<Route>") {
-					// Start a new route
-					Route route;
-					getline(file, line); // Skip the "<Route>" line
-
-					int r, g, b;
-					line.erase(0, 7); // Remove the "Color: " part
-
-					r = stoi(line.substr(0, line.find(" "))); // Get the R channel
-					line.erase(0, line.find(" ") + 1); // Remove the R channel
-					g = stoi(line.substr(0, line.find(" "))); // Get the G channel
-					line.erase(0, line.find(" ") + 1); // Remove the G channel
-					b = stoi(line.substr(0, line.find(" "))); // Get the B channel
-					line.erase(0, line.find(" ") + 1); // Remove the B channel
-					cout << "Found R: " << r << " Found G: " << g << " Found B: " << b << endl;
-
-					Color color(r, g, b); // CREATE THE COLOR BASED ON THE VALUES WE JUST GOT
-					route.color = color; // ASSIGN THE COLOR TO THE ROUTE
-
-					// Now we need to get the coordinates
-					while (getline(file, line)) {
-						if (line == "</>") {
-							// End of the route
-							break;
-						}
-						else {
-							// Add the coordinates to the route
-							int x, y;
-							x = stoi(line.substr(0, line.find(" "))); // Get the X coordinate
-							line.erase(0, line.find(" ") + 1); // Remove the X coordinate
-							y = stoi(line.substr(0, line.find(" "))); // Get the Y coordinate
-							line.erase(0, line.find(" ") + 1); // Remove the Y coordinate
-							cout << "Found X: " << x << " Found Y: " << y << endl;
-							Coordinates coordinates(x, y); // CREATE THE COORDINATES BASED ON THE VALUES WE JUST GOT
-							route.addNode(coordinates); // ADD THE NODE TO THE ROUTE
-							// now I think we can integrate that route easly into the list
-							
-
-
-
-						}
-
-						
-					}
-
-					allRoutes.addRoute(route);
-					cout << "Route added" << endl;
-					cout << "at index: " << allRoutes.size << endl;
-				}
-			}
-			cout << selectedRoute << endl;
-			selectedRoute = allRoutes.size - 1;
-		}
+                while (getline(file, line)) {
+                    if (line == "</>") break; // END OF ROUTE
+                    else {
+                        int x, y;
+                        x = stoi(line.substr(0, line.find(" "))); // X COORDINATE
+                        line.erase(0, line.find(" ") + 1);
+                        y = stoi(line.substr(0, line.find(" "))); // Y COORDINATE
+                        line.erase(0, line.find(" ") + 1);
+                        Coordinates coordinates(x, y); // CREATES A NEW COORDINATE
+                        route.addNode(coordinates); // ADDS THE COORDINATE TO THE ROUTE
+                    }
+                }
+                allRoutes.addRoute(route); // ADDS THE ROUTE TO THE LIST OF ROUTES
+            }
+        }
+        selectedRoute = allRoutes.size; // SELECTS THE LAST ROUTE IN THE LIST
+    }
 };

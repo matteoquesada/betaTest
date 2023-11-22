@@ -1,100 +1,79 @@
 #pragma once
+
 #include "Route.h"
-#include "Node.h"
-#include "Coordinates.h"
 #include <fstream>
-#include <sstream>
-#include <string>
-
-
 #include <iostream>
+
 using namespace std;
 
 class Routes {
 public:
+    Node<Route>* head;
+    int size;
 
-	Node<Route>* head;
-	int size;
+    // CONSTRUCTOR THAT INITIALIZES THE LIST WITH 0 SIZE
+    Routes() : head(nullptr), size(0) {}
 
-	Routes()
-	{
-		head = nullptr;
-		size = 0;
-	}
+    // DESTRUCTOR THAT CLEARS THE LIST AND RELEASES MEMORY
+    ~Routes() {
+        clear();
+    }
 
-	void addRoute(Route route)
+    // ADDS A ROUTE TO THE END OF THE LIST
+    void addRoute(Route& route) {
+        if (head == nullptr) {
+            head = new Node<Route>(route);
+        }
+        else {
+            Node<Route>* temp = head;
+            while (temp->next != nullptr) temp = temp->next;
+            temp->next = new Node<Route>(route);
+        }
+        size++;
+    }
 
-	{
-		if (head == nullptr) {
-			head = new Node<Route>(route);
-			size++;
-		}
-		else{
-			Node<Route>* temp = head;
-			while (temp->next != nullptr)
-			{
-				temp = temp->next;
-			}
-			temp->next = new Node<Route>(route);
-			size++;
-		}
-        cout << size;
-	}
-
-	void draw(RenderWindow& window)
-	{
-		Node<Route>* temp = head;
-		while (temp != nullptr)
-		{
-			temp->data.draw(window);
-			temp = temp->next;
-		}
-	}
-
-
-    void deleteRoute(int index)
-    {
-        if (index == 1)
-        {
-            cout << "Deleting first route" << endl;
-            if (head != nullptr)
-            {
+    // CHANGE THE COLOR OF THE SELECTED ROUTE
+    void deleteRoute(int index) {
+        if (index == 1) {
+            if (head != nullptr) {
                 Node<Route>* temp = head;
                 head = head->next;
                 delete temp;
                 size--;
-          
             }
         }
-        else if (index > 1 && index <= size)
-        {
-            cout << "Deleting route at index " << index << endl;
+        else if (index > 1 && index <= size) {
             Node<Route>* temp = head;
-            for (int i = 0; i < index - 2; i++)
-            {
-                if (temp == nullptr || temp->next == nullptr)
-                {
-                    cout << "ERROR: Invalid index or list traversal issue" << endl;
-                    return;
-                }
+            for (int i = 0; i < index - 2; i++) {
+                if (temp == nullptr || temp->next == nullptr) return; // INDEX OUT OF BOUNDS -TEMP BUG FIX-
                 temp = temp->next;
             }
-
             Node<Route>* nodeToDelete = temp->next;
             temp->next = nodeToDelete->next;
             delete nodeToDelete;
             size--;
-
         }
-        else
-        {
+        else {
             cout << "INVALID INDEX" << endl;
         }
-        cout << size;
     }
 
-    
+    // ADDS A ROUTE TO THE END OF THE LIST
+    void draw(RenderWindow& window) {
+        Node<Route>* temp = head;
+        while (temp != nullptr) {
+            temp->data.draw(window);
+            temp = temp->next;
+        }
+    }
 
-    
-
+    // CLEAR THE LIST AND RELEASE MEMORY
+    void clear() {
+        while (head != nullptr) {
+            Node<Route>* temp = head;
+            head = head->next;
+            delete temp;
+        }
+        size = 0;
+    }
 };
